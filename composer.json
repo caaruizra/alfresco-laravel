@@ -1,8 +1,8 @@
 {
-    "name": "ajtarragona/alfresco-laravel",
-    "keywords" : ["laravel5","laravel","alfresco"],
+    "name": "caaruizra/alfresco-laravel",
+    "keywords" : ["laravel9","laravel","alfresco"],
     "license": "MIT",
-    "description": "Integration of Alfresco in Laravel",
+    "description": "Integration of Alfresco in Laravel 9",
     "authors": [
         {
             "name": "Ruben Macias",
@@ -12,13 +12,12 @@
             "name": "Txomin Medrano",
             "email": "tmedrano@tarragona.cat"
         }
+
     ],
     "minimum-stability": "stable",
     "require": {
         "php" : ">=7.0.0",
-        "guzzlehttp/guzzle": "~6.0",
-        "laravel/helpers": "^1.0"
-
+        "guzzlehttp/guzzle": "^7.2"
     },
     "autoload": {
         "psr-4": {
