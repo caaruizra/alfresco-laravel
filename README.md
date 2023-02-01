@@ -8,47 +8,45 @@ Access client to the Alfresco APIs (Rest and CMIS)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Instalació
+## Install
 ```bash
 composer require ajtarragona/alfresco-laravel:"@dev"
 ``` 
 
-## Configuració
-Pots configurar el paquet a través de l'arxiu `.env` de l'aplicació. Aquests son els parámetres disponibles :
+## Configuration
+You can configure the package through the `.env` file of the application. These are the available parameters:
 
-Paràmetre |  Descripció  | Valors
+Parameter |  Descriptions  | Values
 --- | --- | --- 
-ALFRESCO_URL | Url base de la API  | `http://ip_or_domain:port/alfresco/`
+ALFRESCO_URL | API Base URL  | `http://ip_or_domain:port/alfresco/`
 ALFRESCO_API | Api type | `rest` / <ins>`cmis`</ins> 
-ALFRESCO_API_VERSION  | Codi de versió | `1.0` (rest) / <ins>`1.1`</ins> (cmis)
-ALFRESCO_REPOSITORY_ID  | ID del repositori | `-default-` per defecte
-ALFRESCO_BASE_ID  | ID alfresco del directori base |  
-ALFRESCO_BASE_PATH  | Path del directori base |  
-ALFRESCO_USER  | Usuari |  
+ALFRESCO_API_VERSION  | API Version Code | `1.0` (rest) / <ins>`1.1`</ins> (cmis)
+ALFRESCO_REPOSITORY_ID  | Repository ID | `-default-` per defecte
+ALFRESCO_BASE_ID  | Alfresco base directory ID |  
+ALFRESCO_BASE_PATH  | Base directory path |  
+ALFRESCO_USER  | Username |  
 ALFRESCO_PASSWORD  | Password | --- 
-ALFRESCO_DEBUG  | Mode debug (habilita més logs) | `true` / <ins>`false`</ins>
-ALFRESCO_REPEATED_POLICY  | Política a seguir en cas de pujar un arxiu repetit | <ins>`rename`</ins> / `overwrite` / `deny`
-ALFRESCO_EXPLORER  | Habilita un [explorador d'arxius](#explorador) | `true` / <ins>`false`</ins> 
-ALFRESCO_VERIFY_SSL  | Habilita la verificación del SSL del servidor | `true` / <ins>`false`</ins>  
+ALFRESCO_DEBUG  | Enable debug | `true` / <ins>`false`</ins>
+ALFRESCO_REPEATED_POLICY  | Overwrite policie of existing files | <ins>`rename`</ins> / `overwrite` / `deny`
+ALFRESCO_EXPLORER  | Enable File Explorer | `true` / <ins>`false`</ins> 
+ALFRESCO_VERIFY_SSL  | Enable SSL verification to Alfresco Server  | `true` / <ins>`false`</ins>  
 
 
 
-Alternativament, pots publicar l'arxiu de configuració del paquet amb la comanda:
+Alternatively, you can publish the package configuration file with the command:
 
 ```bash
 php artisan vendor:publish --tag=ajtarragona-alfresco
 ```
 
-Això copiarà l'arxiu `alfresco.php` a la carpeta `config`.
-
+This will copy the `alfresco.php` file to the `config` folder.
  
+## Usage
+Once configured, the package is ready to use.
+You can do it in the following ways
 
-## Ús
-Un cop configurat, el paquet està a punt per fer-se servir.
-Ho pots fer de les següents maneres:
 
-
-**A través d'una `Facade`:**
+**Using `Facade`:**
 ```php
 use Alfresco;
 ...
@@ -58,7 +56,7 @@ public  function  test(){
 }
 ```
 
-Per Laravel < 5.6, cal registrar l'alias de la Facade a l'arxiu `config/app.php` :
+For Laravel < 5.6, you need to register the alias of the Facade in the file `config/app.php` :
  
 ```php
 'aliases'  =>  [
@@ -69,9 +67,8 @@ Per Laravel < 5.6, cal registrar l'alias de la Facade a l'arxiu `config/app.php`
 
   
 
-**Vía Injecció de dependències:**
-Als teus controlladors, helpers, model:
-
+**Using dependency injection:**
+In your controllers, helpers, model:
 
 ```php
 use Ajtarragona\AlfrescoLaravel\Models\AlfrescoService;
@@ -83,28 +80,25 @@ public  function  test(AlfrescoService  $client){
 }
 ```
 
-**Vía funció `helper`:**
+** Using `helper`:**
 ```php
 ...
 public  function  test(){
     $file=alfresco()->getDocument("xxx-yyy-zzz");
     ...
 }
-```
+```  
 
-  
-  
+## Functions
 
-## Funcions
-
-Funció | Descripció | Paràmetres | Retorn | Excepcions
+Function |Description | Parameter | Return | Exceptions
 --- | --- | --- | --- | ---
-**getBasepath** | Retorna el directori arrel des del qual s'executaran els altres mètodes |  | `string` | 
-**setBasepath** | Defineix el directori arrel des del qual s'executaran els altres mètodes | `string:$path`|  
-**getBaseFolder** | Retorna el BaseFolder (el directori arrel a partir del basepath, si està definit) | | `AlfrescoFolder` |	
-**exists** | Retorna si existeix un objecte amb l'ID passat | `string:$objectId` | `boolean` |
-**existsPath** | Retorna si existeix un objecte amb el path passat | `string:$objectPath` | `boolean` |
-**getObject** | Retorna un objecte amb l'ID passat | `string:$objectId` |  `AlfrescoObject` | 
+**getBasepath** | Returns the root directory from which the other methods will run |  | `string` | 
+**setBasepath** | Defines the root directory from which the other methods will run | `string:$path`|  
+**getBaseFolder** | Returns the BaseFolder (the root directory from basepath, if defined)) | | `AlfrescoFolder` |	
+**exists** | Returns true if an object with the passed ID exists | `string:$objectId` | `boolean` |
+**existsPath** | Returns true if an object with the passed path exists  | `string:$objectPath` | `boolean` |
+**getObject** | Returns the object of the passed ID | `string:$objectId` |  `AlfrescoObject` | 
 **getObjectByPath** | Retorna un objecte amb el path passat | `string:$objectPath` | `AlfrescoObject` | 
 **downloadObject** | Descarrega el contingut d'un objecte passant el seu ID | `string:$objectId`<br/> `boolean:$stream=false` | Binary Content |  `AlfrescoObjectNotFoundException`
 **getFolder** | Retorna una carpeta d'Alfresco passant el seu ID | `string:$folderId` | `AlfrescoFolder` |  `AlfrescoObjectNotFoundException`
@@ -131,15 +125,14 @@ Funció | Descripció | Paràmetres | Retorn | Excepcions
 
 
 <a name="explorador"></a>
-## Explorador d'arxius
-Si habilitem  el paràmetre: 
+## File Explorer
+IF the Alfresco Debug is active: 
 ```
 ALFRESCO_DEBUG = true 
 ```
-a l'arxiu `.env`, podem accedir a un *file-explorer* a la ruta: 
-`/ajtarragona/alfresco/explorer`
+in the `.env` file, we can access a *file-explorer* in the path:
 
-> Aquesta funcionalitat requereixen el paquet **web-components**: <br><br>[https://github.com/ajtarragona/web-components](https://github.com/ajtarragona/web-components)<br><br>És una ruta securitzada i només s'hi podrà accedir si habilitem l'autenticació a la nostra aplicació Laravel.
+`/ajtarragona/alfresco/explorer`
 
 
 
