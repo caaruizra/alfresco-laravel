@@ -84,8 +84,8 @@ class AlfrescoDocument extends AlfrescoObject {
 
 		//_dump($provider);
 
-		$doc->downloadurl = $provider->getDownloadUrl($doc); //($cmisdocument->getContentUrl());
-		$doc->viewurl = $provider->getPreviewUrl($doc); //($cmisdocument->getContentUrl());D
+	//	$doc->downloadurl = $provider->getDownloadUrl($doc); //($cmisdocument->getContentUrl());
+	//	$doc->viewurl = $provider->getPreviewUrl($doc); //($cmisdocument->getContentUrl());D
 		//$doc->previewurl = $provider->getPreviewUrl($doc); //($cmisdocument->getContentUrl());D
 
 		$doc->mimetype =  $document->content->mimeType;
@@ -141,8 +141,8 @@ class AlfrescoDocument extends AlfrescoObject {
 
 		//_dump($provider);
 
-		$doc->downloadurl = $provider->getDownloadUrl($doc); //($cmisdocument->getContentUrl());
-		$doc->viewurl = $provider->getPreviewUrl($doc); //($cmisdocument->getContentUrl());
+/*		$doc->downloadurl = $provider->getDownloadUrl($doc); //($cmisdocument->getContentUrl());
+		$doc->viewurl = $provider->getPreviewUrl($doc); //($cmisdocument->getContentUrl());*/
 
 		$doc->mimetype =  $cmisdocument->prop("contentStreamMimeType");
 		$doc->mimetypedescription = AlfrescoHelper::getShortType($doc->mimetype);

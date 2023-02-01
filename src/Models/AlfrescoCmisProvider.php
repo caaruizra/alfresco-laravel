@@ -51,6 +51,7 @@ class AlfrescoCmisProvider
 
 
 	
+	
 
 	public function __construct($settings=false) { 
 
@@ -60,14 +61,14 @@ class AlfrescoCmisProvider
 		}
 		
 		$this->rootpath=$settings->base_path;
-		if(!ends_with($this->rootpath,"/")) $this->rootpath.="/";
+		if(!str_ends_with($this->rootpath,"/")) $this->rootpath.="/";
 		
 		
 
 		$this->basepath= "";
 
 		$this->alfrescourl = $settings->url;
-		if(!ends_with($this->alfrescourl,"/")) $this->alfrescourl.="/";
+		if(!str_ends_with($this->alfrescourl,"/")) $this->alfrescourl.="/";
 
 		$this->apiuser = $settings->user;
 		$this->apipwd = $settings->pass;
@@ -97,9 +98,7 @@ class AlfrescoCmisProvider
 			$apiurl=$this->generateApiUrl();
 			
 			if($this->debug) Log::debug("ALFRESCO: Connecting to CMIS API:" .$apiurl);
-			
 			$this->session = new CmisService($apiurl, $this->apiuser, $this->apipwd);
-
 			$ret=$this->session->getObjectByPath($this->getBasepath(true));
 			
 			if(!$ret){
@@ -110,6 +109,7 @@ class AlfrescoCmisProvider
 		}catch(CmisRuntimeException | CmisObjectNotFoundException $e){
 			Log::error("Error connecting to Alfresco server");
 			Log::error($e->getMessage());
+			
 			throw new AlfrescoConnectionException(__("Error connecting to Alfresco server"));
 		}
 	}
@@ -119,7 +119,7 @@ class AlfrescoCmisProvider
 		
 		//_dump($object->path);
 		//_dump($this->getBasepath(true));
-		if(!starts_with($object->path, $this->getBasepath(true))){ 
+		if(!str_starts_with($object->path, $this->getBasepath(true))){ 
 			return true;
 		}else {
 			throw new AlfrescoObjectNotFoundException(__("Object :name doesn't belong to the current site",["name"=>$object->id]));
@@ -146,7 +146,7 @@ class AlfrescoCmisProvider
 	 */
 	public function setBasepath($path){
 		$this->basepath=$path;
-		if(!ends_with($this->basepath,"/")) $this->basepath.="/";
+		if(!str_ends_with($this->basepath,"/")) $this->basepath.="/";
 	}
 
 
@@ -279,6 +279,7 @@ class AlfrescoCmisProvider
 		
 
 			$thepath=$this->getBasepath(true).$objectPath;
+
 			$thepath=urlencode($thepath);
 			//dump($thepath);
 			if($thepath == ""){
@@ -857,7 +858,7 @@ class AlfrescoCmisProvider
 			$target=$obj->getParent();
 			
 			if($obj->isDocument()){
-				if(!ends_with($newName,".".$obj->extension)) $newName.=".".$obj->extension;
+				if(!str_ends_with($newName,".".$obj->extension)) $newName.=".".$obj->extension;
 
 				$contents=$this->session->getContentStream($obj->id);
 				
@@ -1128,18 +1129,18 @@ class AlfrescoCmisProvider
 
 
 	public function getDownloadUrl($object){
-		return route('alfresco.download',[$object->id]);
+		return "";
     }
     
     /*return the user download url of a file */
     public function getViewUrl($object){
-        return route('alfresco.view',[$object->id]);
+        return "";
 		
     }
 
     /*return the user preview url of a file */
     public function getPreviewUrl($object){
-        return route('alfresco.preview',[$object->id]);
+        return "";
 		
     }
 

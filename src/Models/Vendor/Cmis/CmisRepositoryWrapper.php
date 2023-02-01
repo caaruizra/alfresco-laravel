@@ -138,6 +138,8 @@ class CmisRepositoryWrapper
         $this->password = $password;
         $this->auth_options = $options;
         $this->authenticated = false;
+
+
         $retval = $this->doGet($this->url);
         if ($retval->code == self::HTTP_OK || $retval->code == self::HTTP_CREATED)
         {
@@ -196,7 +198,6 @@ class CmisRepositoryWrapper
 
     protected function doRequest($url, $method = "GET", $content = null, $contentType = null, $charset = null)
     {
-        
         
         // Process the HTTP request
         // 'til now only the GET request has been tested
